@@ -2,8 +2,10 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.12 as buildstage
 
 RUN \
   apk add --no-cache \
-    git && \
-    git clone --depth=1 https://github.com/tfutils/tfenv.git /root-layer/app/tfenv
+    curl && \
+    mkdir -p /root-layer/app/tfsec/ && \
+    curl -o /root-layer/app/tfsec/install.sh -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh && \
+    TFSEC_INSTALL_PATH=/root-layer/app/tfsec/ /root-layer/app/tfsec/install.sh
 
 COPY root/ /root-layer/
 
