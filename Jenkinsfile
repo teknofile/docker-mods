@@ -63,6 +63,7 @@ pipeline {
         deleteDir()
         withDockerRegistry(credentialsId: 'teknofile-dockerhub', url: "https://index.docker.io/v1/") {
           sh '''
+            docker buildx create --name tkf-builder-${GITHASH_SHORT} --bootstrap --use
             docker buildx build \
               --platform linux/arm,linux/arm64,linux/amd64 \
               -t teknofile/${CONTAINER_NAME} \
@@ -71,6 +72,7 @@ pipeline {
               -t teknofile/${CONTAINER_NAME}:latest \
               . \
               --push
+            docker buildx rm -f tkf-builder-${GITHASH_SHORT}
           '''
         }
       }
