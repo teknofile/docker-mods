@@ -60,7 +60,6 @@ pipeline {
 
       steps {
         echo "Running on node: ${NODE_NAME}"
-        deleteDir()
         withDockerRegistry(credentialsId: 'teknofile-dockerhub', url: "https://index.docker.io/v1/") {
           sh '''
             docker buildx create --name tkf-builder-${GITHASH_SHORT} --bootstrap --use
