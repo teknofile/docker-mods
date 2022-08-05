@@ -30,7 +30,6 @@ pipeline {
   environment {
     CONTAINER_NAME = 'docker-mods'
     DCKR_TZ = 'America/Denver'
-    DCKR_NAME = 'tkf-calibre'
   }
 
   stages {
@@ -64,11 +63,10 @@ pipeline {
           sh '''
             docker buildx create --name tkf-builder-${GITHASH_SHORT} --bootstrap --use
             docker buildx build \
-              --platform linux/arm,linux/arm64,linux/amd64 \
-              -t teknofile/${CONTAINER_NAME} \
+              --platform linux/arm64,linux/amd64 \
               -t teknofile/${CONTAINER_NAME}:${GITHASH_SHORT} \
               -t teknofile/${CONTAINER_NAME}:${GITHASH_LONG} \
-              -t teknofile/${CONTAINER_NAME}:latest \
+              -t teknofile/${CONTAINER_NAME}:${BRANCH_NAME} \
               . \
               --push
             docker buildx rm -f tkf-builder-${GITHASH_SHORT}
