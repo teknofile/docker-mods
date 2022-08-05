@@ -2,6 +2,7 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.12 as buildstage
 
 RUN \
   apk add --no-cache \
+    dpkg \
     curl && \
     mkdir -p /root-layer/app/tfsec/ && \
     curl -o /root-layer/app/tfsec/install.sh -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh && \
