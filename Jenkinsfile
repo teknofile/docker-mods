@@ -28,6 +28,7 @@ pipeline {
   }
 
   environment {
+    CONTAINER_NAME = 'docker-mods'
     DCKR_TZ = 'America/Denver'
     DCKR_NAME = 'tkf-calibre'
   }
