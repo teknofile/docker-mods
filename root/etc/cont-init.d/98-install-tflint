@@ -3,15 +3,13 @@
 echo "*** tflint installer ***"
 echo "Checking if tflint is installed"
 
-TFLINT_INSTALL_PATH = "/app/tflint"
-
-apk update
-apk add --no-cache unzip
+apt update
+apt install unzip
 
 if ! /app/tflint/bin/tflint -v COMMAND &> /dev/null; then 
   echo "tflint not installed, installing now..." 
-  git clone --depth=1 https://github.com/tfutils/tflint.git /app/tfenv
-  curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+  git clone --depth=1 https://github.com/tfutils/tflint.git /app/tflint
+  curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | TFLINT_INSTALL_PATH="/app/tflint" bash
 
   ln -s /app/tflint/bin/tflint /usr/local/bin/tflint
   

@@ -7,6 +7,7 @@ if ! /app/tgenv/bin/tgenv -v COMMAND &> /dev/null; then
   echo "tgenv not installed, installing now..." 
   git clone --depth=1 https://github.com/cunymatthieu/tgenv.git /app/tgenv
 
+  ln -s /app/tgenv/bin/tgenv /usr/local/bin/tgenv
 else
   echo "tgenv already installed, skipping!"
 fi

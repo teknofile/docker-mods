@@ -7,6 +7,7 @@ if ! /app/tfenv/bin/tfenv -v COMMAND &> /dev/null; then
   echo "tfenv not installed, installing now..." 
   git clone --depth=1 https://github.com/tfutils/tfenv.git /app/tfenv
 
+  ln -s /app/tfenv/bin/tfenv /usr/local/bin/tfenv
 else
   echo "tfenv already installed, skipping!"
 fi

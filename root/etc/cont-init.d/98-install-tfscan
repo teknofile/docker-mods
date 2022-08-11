@@ -14,6 +14,7 @@ if ! /app/terrascan/terrascan -v COMMAND &> /dev/null; then
   chmod +x /tmp/terrascan
   mkdir -p /app/terrascan 
   mv /tmp/terrascan /app/terrascan/terrascan
+  ln -s /app/terrascan/terrascan /usr/local/bin/terrascan
 
 else
   echo "terrascan already installed, skipping!"
