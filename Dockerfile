@@ -11,6 +11,7 @@ RUN apk add --no-cache \
 RUN apk add --no-cache --virtual .build \
   build-base libffi-dev
 
+RUN pip3 install --user --no-cache-dir --prefer-binary setuptools
 RUN pip3 install --user --no-cache-dir --prefer-binary  \
         --find-links https://wheels.home-assistant.io/alpine-3.14/amd64/ \
         --find-links https://wheels.home-assistant.io/alpine-3.14/aarch64/ \
