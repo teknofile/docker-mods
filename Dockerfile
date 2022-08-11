@@ -4,18 +4,12 @@ ENV PATH "$PATH:/app/bin/"
 
 WORKDIR /app/
 
-RUN apk add --no-cache \
-  libffi \
-  py3-pip
+RUN apk add --no-cache curl
 
-RUN apk add --no-cache --virtual .build \
-  build-base libffi-dev
-
-RUN pip3 install --upgrade pip && pip3 install --upgrade setuptools
-RUN pip3 install --user --no-cache-dir --prefer-binary  \
-        --find-links https://wheels.home-assistant.io/alpine-3.14/amd64/ \
-        --find-links https://wheels.home-assistant.io/alpine-3.14/aarch64/ \
-        checkov
+RUN curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+RUN tar -xzf terraform-docs.tar.gz
+RUN chmod +x terraform-docs
+RUN mkdir -p /app/terraform-docs && mv terraform-docs /app/terraform-docs/terraform-docs
 
 COPY root/ /root-layer/
 
