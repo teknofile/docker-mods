@@ -1,8 +1,6 @@
 FROM ghcr.io/linuxserver/baseimage-alpine:3.12 as buildstage
-ENV PYTHONUSERBASE /app
-ENV PATH "$PATH:/app/bin/"
 
-WORKDIR /app/
+WORKDIR /root-layer/app/
 
 RUN apk add --no-cache curl
 
@@ -16,11 +14,35 @@ RUN if [ "${TARGETPLATFORM}" == "linux/arm64" ] ; then \
 
 RUN tar -xzf /tmp/terraform-docs.tar.gz -C /tmp/
 RUN chmod +x /tmp/terraform-docs
-RUN mkdir -p /app/terraform-docs 
-RUN mv /tmp/terraform-docs /app/terraform-docs/terraform-docs
+RUN mkdir -p /root-layer/app/terraform-docs 
+RUN mv /tmp/terraform-docs /root-layer/app/terraform-docs/terraform-docs
+
+RUN \
+  apk add --no-cache \
+    git && \
+    git clone --depth=1 https://github.com/tfutils/tfenv.git /root-layer/app/tfenv
+
+RUN \
+  apk add --no-cache \
+    curl \ 
+    git && \
+    git clone https://github.com/cunymatthieu/tgenv.git /root-layer/app/tgenv
+
+COPY root/ /root-layer/
+
+FROM ghcr.io/linuxserver/baseimage-alpine:3.12 as build-tfsec
+
+RUN \
+  apk add --no-cache \
+    dpkg \
+    curl && \
+    mkdir -p /root-layer/app/tfsec/ && \
+    curl -o /root-layer/app/tfsec/install.sh -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh && \
+    chmod +x /root-layer/app/tfsec/install.sh && \
+    TFSEC_INSTALL_PATH=/root-layer/app/tfsec/ /root-layer/app/tfsec/install.sh
 
 COPY root/ /root-layer/
 
 FROM scratch
+COPY --from=build-tfsec /root-layer/ /
 COPY --from=buildstage /root-layer/ /
-COPY --from=buildstage /app /app
