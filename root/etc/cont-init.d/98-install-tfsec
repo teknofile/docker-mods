@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bash
+
+echo "*** tfsec installer ***"
+echo "Checking if tfsec is installed"
+
+if ! /app/bin/tfsec -v COMMAND &> /dev/null; then 
+  mkdir -p /app/tfsec/
+  curl -o /app/tfsec/install.sh -Ls https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh
+  chmod +x /app/tfsec/install.sh
+  TFSEC_INSTALL_PATH=/app/tfsec/ /app/tfsec/install.sh
+
+else
+  echo "tfsec already installed, skipping!"
+fi

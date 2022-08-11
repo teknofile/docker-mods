@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bash
+
+echo "*** tfenv installer ***"
+echo "Checking if tfenv is installed"
+
+if ! /app/tfenv/bin/tfenv -v COMMAND &> /dev/null; then 
+  echo "tfenv not installed, installing now..." 
+  git clone --depth=1 https://github.com/tfutils/tfenv.git /app/tfenv
+
+else
+  echo "tfenv already installed, skipping!"
+fi
