@@ -5,9 +5,9 @@ echo "Checking if terraform-docs is installed"
 
 if ! /app/terrascan/terrascan -v COMMAND &> /dev/null; then 
   if [ `uname -m` == "aarch64" ] ; then
-    curl -Lo /tmp/terrascan.tar.gz $(https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_arm64.tar.gz")
+    curl -Lo /tmp/terrascan.tar.gz $(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_arm64.tar.gz")
   else
-    curl -Lo /tmp/terrascan.tar.gz $(https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_x86_64.tar.gz")
+    curl -Lo /tmp/terrascan.tar.gz $(curl -s https://api.github.com/repos/tenable/terrascan/releases/latest | grep -o -E "https://.+?_Linux_x86_64.tar.gz")
   fi
 
   tar -xzf /tmp/terrascan.tar.gz -C /tmp/
@@ -16,6 +16,7 @@ if ! /app/terrascan/terrascan -v COMMAND &> /dev/null; then
   mv /tmp/terrascan /app/terrascan/terrascan
   ln -s /app/terrascan/terrascan /usr/local/bin/terrascan
 
+  chown -R abc:abc /app/terrascan
 else
   echo "terrascan already installed, skipping!"
 fi

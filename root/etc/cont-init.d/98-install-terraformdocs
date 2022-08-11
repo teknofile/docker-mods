@@ -16,7 +16,7 @@ if ! /app/terraform-docs/terraform-docs -v COMMAND &> /dev/null; then
   mv /tmp/terraform-docs /app/terraform-docs/terraform-docs
 
   ln -s /app/terraform-docs/terraform-docs /usr/local/bin/terraform-docs
-
+  chown -R abc:abc /app/terraform-docs
 else
   echo "terraform-docs already installed, skipping!"
 fi

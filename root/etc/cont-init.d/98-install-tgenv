@@ -8,6 +8,7 @@ if ! /app/tgenv/bin/tgenv -v COMMAND &> /dev/null; then
   git clone --depth=1 https://github.com/cunymatthieu/tgenv.git /app/tgenv
 
   ln -s /app/tgenv/bin/tgenv /usr/local/bin/tgenv
+  chown -R abc:abc /app/tgenv
 else
   echo "tgenv already installed, skipping!"
 fi
