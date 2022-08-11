@@ -4,9 +4,12 @@ ENV PATH "$PATH:/app/bin/"
 
 WORKDIR /app/
 
-RUN apk add --no-cache libffi && \
-    apk add --no-cache --virtual .build \
-    build-base libffi-dev
+RUN apk add --no-cache \
+  libffi \
+  py3-pip
+
+RUN apk add --no-cache --virtual .build \
+  build-base libffi-dev
 
 RUN pip3 install --user --no-cache-dir --prefer-binary  \
         --find-links https://wheels.home-assistant.io/alpine-3.14/amd64/ \
