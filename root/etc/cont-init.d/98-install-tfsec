@@ -9,7 +9,7 @@ if ! /app/tfsec/tfsec -v COMMAND &> /dev/null; then
   chmod +x /app/tfsec/install.sh
   TFSEC_INSTALL_PATH=/app/tfsec/ /app/tfsec/install.sh
 
-  chown -R abc:abc /app/tgenv
+  chown -R abc:abc /app/tfsec
   ln -s /app/tfsec/tfsec /usr/local/bin/tfsec
 else
   echo "tfsec already installed, skipping!"
