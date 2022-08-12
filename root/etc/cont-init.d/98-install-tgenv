@@ -5,7 +5,8 @@ echo "Checking if tgenv is installed"
 
 if ! /app/tgenv/bin/tgenv -v COMMAND &> /dev/null; then 
   echo "tgenv not installed, installing now..." 
-  git clone --depth=1 https://github.com/cunymatthieu/tgenv.git /app/tgenv
+  # git clone --depth=1 https://github.com/cunymatthieu/tgenv.git /app/tgenv
+  git clone --depth=1 https://github.com/teknofile/tgenv.git /app/tgenv
 
   ln -s /app/tgenv/bin/tgenv /usr/local/bin/tgenv
   chown -R abc:abc /app/tgenv
