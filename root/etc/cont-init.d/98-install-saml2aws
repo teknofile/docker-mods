@@ -4,6 +4,11 @@ echo "*** infracost installer ***"
 echo "Checking if infracost is installed"
 
 if ! ~/.local/bin/saml2aws -v COMMAND &> /dev/null; then 
+
+  apt update
+  apt upgrade -y
+  apt install curl wget
+
   if [ `uname -m` == "aarch64" ] ; then
     CURRENT_VERSION=$(curl -Ls https://api.github.com/repos/Versent/saml2aws/releases/latest | grep 'tag_name' | cut -d'v' -f2 | cut -d'"' -f1)
     wget -c https://github.com/Versent/saml2aws/releases/download/v${CURRENT_VERSION}/saml2aws_${CURRENT_VERSION}_linux_arm64.tar.gz -O - | tar -xzv -C ~/.local/bin
